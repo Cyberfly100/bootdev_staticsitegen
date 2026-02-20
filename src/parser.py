@@ -1,4 +1,5 @@
 from textnode import TextNode, TextType
+import re
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
@@ -19,3 +20,18 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                     raise Exception(f"Unknown text type: {text_type}.")
                 new_nodes.append(TextNode(segment, text_type))
     return new_nodes
+
+def extract_markdown_images(text):
+    alt_text_pattern = r"(?<=\!\[)[\w\s]+(?=\])"
+    image_pattern = r"(?<=\()[^\s]+(?=\))"
+    alt_texts = re.findall(alt_text_pattern, text)
+    images = re.findall(image_pattern, text)
+    return list(zip(alt_texts, images))
+
+def extract_markdown_links(text):
+    url_pattern = r"(?<=\()[^\s]+(?=\))"
+    anchor_text_pattern = r"(?<=\[)[\w\s]+(?=\])"
+    anchors = re.findall(anchor_text_pattern, text)
+    urls = re.findall(url_pattern, text)
+    return list(zip(anchors, urls))
+ 
