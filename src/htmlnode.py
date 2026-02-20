@@ -14,7 +14,7 @@ class HTMLNode():
         props_strings = []
         for key, value in self.props.items():
             props_strings.append(f'{key}="{value}"')
-        return " ".join(props_strings) # TODO: do we need a leading space?
+        return " " + " ".join(props_strings)
 
     def __repr__(self):
         output = []
@@ -38,4 +38,17 @@ class HTMLNode():
             for key, value in self.props.items():
                 props.append(f"    - {key}: {value}")
             output.append(f"  - props:\n{"\n".join(props)}")
-        return f'HTMLNode:\n{"\n".join(output)}'
+        return f'{type(self).__name__}:\n{"\n".join(output)}'
+
+class LeafNode(HTMLNode):
+    def __init__(self, tag:str, value:str, props:dict[str:str] = None):
+        super().__init__(tag, value, None, props)
+
+    def to_html(self):
+        if self.value == None:
+            raise ValueError("All leaf nodes must have a value.")
+        if not self.tag:
+            return self.value
+        else:
+            return f'<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>'
+
