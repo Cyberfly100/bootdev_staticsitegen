@@ -2,7 +2,7 @@ import unittest
 from textnode import TextNode, TextType
 from inline_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes
 
-class TestConverter(unittest.TestCase):
+class TestInlineParser(unittest.TestCase):
     def test_bold(self):
         old_node = TextNode("This is text with a **bold section**", TextType.TEXT)
         new_nodes = split_nodes_delimiter([old_node], "**", TextType.BOLD)
