@@ -64,3 +64,8 @@ class ParentNode(HTMLNode):
         for child in self.children:
             children_string += child.to_html()
         return f'<{self.tag}{self.props_to_html()}>{children_string}</{self.tag}>'
+    
+    def add_child(self, child: HTMLNode | LeafNode | ParentNode):
+        if self.children == None:
+            self.children = []
+        self.children.append(child)

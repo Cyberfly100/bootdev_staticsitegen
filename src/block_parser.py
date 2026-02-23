@@ -13,9 +13,25 @@ def markdown_to_blocks(markdown: str) -> list[str]:
     stripped_blocks = [block.strip() for block in blocks if block]
     return stripped_blocks
 
+def detect_heading(block: str) -> int:
+    if block.startswith("# "):
+        return 1
+    elif block.startswith("## "):
+        return 2
+    elif block.startswith("### "):
+        return 3
+    elif block.startswith("#### "):
+        return 4
+    elif block.startswith("##### "):
+        return 5
+    elif block.startswith("###### "):
+        return 6
+    else:
+        return 0
+
 def block_to_block_type(md_block) -> BlockType:
     block_type = BlockType.PARAGRAPH
-    if md_block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
+    if detect_heading(md_block):
         block_type = BlockType.HEADING
     elif md_block.startswith("```\n") and md_block.endswith("```"):
         block_type = BlockType.CODE
@@ -25,7 +41,7 @@ def block_to_block_type(md_block) -> BlockType:
         block_type = BlockType.UNORDERED_LIST 
     elif md_block[0].isdigit():
         lines = md_block.split("\n")
-        initial_number = int("".join([ch for ch in lines[0] if ch.isdigit()]))
+        initial_number = int("".join([ch for ch in lines[0].split(".", 1)[0] if ch.isdigit()]))
         if all([line.startswith(f"{initial_number + i}. ") for i, line in enumerate(lines)]):
             block_type = BlockType.ORDERED_LIST
     return block_type

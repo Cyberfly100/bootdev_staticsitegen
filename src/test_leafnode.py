@@ -1,5 +1,7 @@
 import unittest
 from htmlnode import LeafNode
+from textnode import TextNode, TextType
+from converter import text_node_to_html_node
 
 class TestLeafNode(unittest.TestCase):
     def test_leaf_to_html_p(self):
