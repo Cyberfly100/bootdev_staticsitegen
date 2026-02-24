@@ -1,5 +1,5 @@
 import unittest
-from block_parser import markdown_to_blocks, BlockType, block_to_block_type
+from block_parser import markdown_to_blocks, BlockType, block_to_block_type, extract_title
 
 class TestBlockParser(unittest.TestCase):
     def test_markdown_to_blocks1(self):
@@ -122,7 +122,37 @@ This is the same paragraph on a new line
             ],
             block_types
         )
- 
+    
+    def test_extract_title1(self):
+        md = """
+# This is the title
+
+This is the first paragraph.
+
+This is some text with a [link](https://example.com) and some **bold** text.
+
+- This is a list item
+- This is another list item
+"""
+        title = extract_title(md)
+        self.assertEqual(title, "This is the title")
+
+    def test_extract_title2(self):
+        md = """
+## This is the title, but not h1
+
+This is the first paragraph.
+
+This is some text with a [link](https://example.com) and some **bold** text.
+
+- This is a list item
+- This is another list item
+"""
+        self.assertRaises(
+            Exception,
+            extract_title,
+            md
+        )
 
 if __name__ == "__main__":
     unittest.main()
