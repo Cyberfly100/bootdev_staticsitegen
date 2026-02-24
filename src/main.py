@@ -1,8 +1,9 @@
-from textnode import TextNode, TextType
+from filemanagement import copy_static_files
 
 def main():
-    test_node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    print(test_node)
+    current_wd = "/".join(__file__.split("/")[:-2])
+
+    copy_static_files(current_wd, log=False)
 
 if __name__ == "__main__":
     main()

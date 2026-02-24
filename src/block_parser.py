@@ -45,3 +45,10 @@ def block_to_block_type(md_block) -> BlockType:
         if all([line.startswith(f"{initial_number + i}. ") for i, line in enumerate(lines)]):
             block_type = BlockType.ORDERED_LIST
     return block_type
+
+def extract_title(markdown: str) -> str:
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        if detect_heading(block) == 1:
+            return block.lstrip("# ").strip()
+    raise Exception("No title found in markdown. Please include a level 1 heading as the title.")
