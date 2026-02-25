@@ -71,7 +71,7 @@ def markdown_to_html_node(markdown):
                 nodes.append(ParentNode("ul", child_nodes))
             case BlockType.ORDERED_LIST:
                 initial_number = int("".join([ch for ch in block.split(".", 1)[0] if ch.isdigit()]))
-                child_nodes = [LeafNode("li", item.strip()) for item in text_block.split("\n")]
+                child_nodes = [ParentNode("li", text_to_child_nodes(item.strip())) for item in text_block.split("\n")]
                 nodes.append(ParentNode("ol", child_nodes, {"start": str(initial_number)}))
             case _:
                 types = [e.value for e in BlockType]

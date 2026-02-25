@@ -100,7 +100,7 @@ This is another paragraph with _italic_ text and `code` here
 - ![Image text](https://imgurl.com/image.png)
 
 34. Item 1
-35. Item 2
+35. Testing _inline_ conversion
 36. Item 3
 """
 
@@ -108,7 +108,7 @@ This is another paragraph with _italic_ text and `code` here
         html = node.to_html()
         self.assertEqual(
             html,
-            '<div><ul><li>Item 1</li><li>Item 2</li><li><img src="https://imgurl.com/image.png" alt="Image text"></img></li></ul><ol start="34"><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol></div>',
+            '<div><ul><li>Item 1</li><li>Item 2</li><li><img src="https://imgurl.com/image.png" alt="Image text"></img></li></ul><ol start="34"><li>Item 1</li><li>Testing <i>inline</i> conversion</li><li>Item 3</li></ol></div>',
         )
 
 if __name__ == "__main__":
