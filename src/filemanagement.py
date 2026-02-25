@@ -1,9 +1,9 @@
 import os
 import shutil
 
-def copy_static_files(working_directory, log=False):
+def copy_static_files(working_directory, target_dir, log=False):
     WORKING_DIR = os.path.abspath(working_directory)
-    DESTINATION_DIR = os.path.normpath(os.path.join(WORKING_DIR, "public"))
+    DESTINATION_DIR = os.path.normpath(os.path.join(WORKING_DIR, target_dir))
     os.makedirs(DESTINATION_DIR, exist_ok=True)
     SOURCE_DIR = os.path.normpath(os.path.join(WORKING_DIR, "static"))
     delete_files_in_directory(DESTINATION_DIR, log=log)
